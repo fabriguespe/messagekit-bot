@@ -8,7 +8,7 @@ export async function handler(context: HandlerContext, fake?: boolean) {
     getMessageById,
     message: { id, content, sender, typeId },
   } = context;
-  if (fake) {
+  if (fake && stack) {
     //for fake demo
     fakeReaction(sender.username, sender.address, id, stack, context);
     return;
@@ -24,18 +24,18 @@ export async function handler(context: HandlerContext, fake?: boolean) {
           (entry, index) =>
             `${index + 1}. Address: ${`${entry.address.slice(
               0,
-              6,
-            )}...${entry.address.slice(-4)}`}, Points: ${entry.points}`,
+              6
+            )}...${entry.address.slice(-4)}`}, Points: ${entry.points}`
         )
         .join("\n");
       context.reply(
-        `Leaderboard:\n\n${formattedLeaderboard}\n\nCheck out the public leaderboard\nhttps://www.stack.so/leaderboard/degen-group`,
+        `Leaderboard:\n\n${formattedLeaderboard}\n\nCheck out the public leaderboard\nhttps://www.stack.so/leaderboard/degen-group`
       );
     }
   } else if (typeId === "group_updated") {
     const { initiatedByInboxId, addedInboxes } = content;
     const adminAddress = members?.find(
-      (member: User) => member.inboxId === initiatedByInboxId,
+      (member: User) => member.inboxId === initiatedByInboxId
     );
     if (addedInboxes && addedInboxes.length > 0) {
       //if add someone to the group
@@ -50,7 +50,7 @@ export async function handler(context: HandlerContext, fake?: boolean) {
     const msg = await getMessageById(content.reference);
     if (action === "added") {
       const adminAddress = members?.find(
-        (member: User) => member.inboxId === msg?.senderInboxId,
+        (member: User) => member.inboxId === msg?.senderInboxId
       );
       let points = 1;
       if (emoji === "👎") {
@@ -71,7 +71,7 @@ async function fakeReaction(
   address: string,
   id: string,
   stack: StackClient,
-  context: HandlerContext,
+  context: HandlerContext
 ) {
   if (username === "me") {
     if (Math.random() < 0.3) {

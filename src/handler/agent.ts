@@ -3,7 +3,8 @@ import { textGeneration } from "../lib/openai.js";
 
 export async function handler(context: HandlerContext) {
   if (!process.env.OPEN_AI_API_KEY) {
-    return context.reply("No OpenAI API key found");
+    console.log("No OPEN_AI_API_KEY found in .env");
+    return;
   }
 
   const {
@@ -35,7 +36,12 @@ function generateSystemPrompt(context: HandlerContext) {
   } = context;
 
   const systemPrompt = `You are a helpful agent that lives inside a web3 messaging group.\n
-  These are the users of the group: ${JSON.stringify(members?.map((member: User) => ({ ...member, username: `@${member.username}` })))}\n 
+  These are the users of the group: ${JSON.stringify(
+    members?.map((member: User) => ({
+      ...member,
+      username: `@${member.username}`,
+    }))
+  )}\n 
   This group app has many commands available: ${JSON.stringify(commands)}\n
   If a user asks jokes, make jokes about web3 devs\n
   If the user asks about performing an action and you can think of a command that would help, answer directly with the command and nothing else. Populate the command with the correct or random values. Always return commands with real values only, using usernames with @ and excluding addresses.\n

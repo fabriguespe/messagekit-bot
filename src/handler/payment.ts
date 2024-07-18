@@ -3,7 +3,8 @@ import { vision, textGeneration } from "../lib/openai.js";
 
 export async function handler(context: HandlerContext) {
   if (!process.env.OPEN_AI_API_KEY) {
-    return context.reply("No OpenAI API key found");
+    console.log("No OPEN_AI_API_KEY found in .env");
+    return;
   }
   const {
     members,
@@ -19,18 +20,23 @@ export async function handler(context: HandlerContext) {
     const { data, filename, mimeType } = attachment;
     const response = await vision(
       data,
-      "This image is the bill of a restaurant dinner. Return the total. If you can't find the total, return 'undefined'.",
+      "This image is the bill of a restaurant dinner. Return the total. If you can't find the total, return 'undefined'."
     );
     if (response?.includes("undefined")) {
       return;
     } else {
       context.reply(
-        "You uploaded a new bill. Let's go ahead and split the bill.",
+        "You uploaded a new bill. Let's go ahead and split the bill."
       );
     }
     if (response) {
       const prompt = `You a split wise agent that splits the bill between the members of this group except for the sender and bot.\n
-      These are the users of the group: ${JSON.stringify(members?.map((member) => ({ ...member, username: `@${member.username}` })))}\n 
+      These are the users of the group: ${JSON.stringify(
+        members?.map((member) => ({
+          ...member,
+          username: `@${member.username}`,
+        }))
+      )}\n 
       This group app has many commands available: ${JSON.stringify(commands)}\n
       
 
