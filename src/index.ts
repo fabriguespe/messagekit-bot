@@ -31,7 +31,8 @@ const commandHandlers: CommandHandlers = {
         .flatMap((app) => app.commands)
         .map((command) => `${command.command} - ${command.description}`)
         .join("\n") +
-      "\nUse these commands to interact with specific apps.";
+      "\nUse these commands to interact with specific apps.\n" +
+      "Note: Converse doesn't handle usernames yet. You can use fake ones (bo, alix, eva, bot, me) in this example).";
     context.reply(intro);
   },
 };
