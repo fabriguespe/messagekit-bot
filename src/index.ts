@@ -8,7 +8,7 @@ import { handler as splitpayment } from "./handler/payment.js";
 import { handler as games } from "./handler/game.js";
 import { handler as admin } from "./handler/admin.js";
 import { handler as loyalty } from "./handler/loyalty.js";
-
+import { handler as apps } from "./handler/apps.js";
 // Define command handlers
 const commandHandlers: CommandHandlers = {
   "/tip": tipping,
@@ -18,6 +18,7 @@ const commandHandlers: CommandHandlers = {
   "/swap": transaction,
   "/mint": transaction,
   "/show": transaction,
+  "/apps": apps,
   "/points": loyalty,
   "/leaderboard": loyalty,
   "/game": games,
@@ -30,9 +31,8 @@ const commandHandlers: CommandHandlers = {
       commands
         .flatMap((app) => app.commands)
         .map((command) => `${command.command} - ${command.description}`)
-        .join("\n") +
-      "\nUse these commands to interact with specific apps.\n" +
-      "Note: Converse doesn't handle usernames yet. You can use fake ones (bo, alix, eva, bot, me) in this example).";
+        .join("\n\n") +
+      "\n\nUse these commands to interact with specific apps.";
     context.reply(intro);
   },
 };
@@ -92,7 +92,7 @@ async function handleReply(context: HandlerContext) {
   const {
     content: { content: reply },
   } = context.message;
-  if (reply.includes("$degen")) {
+  if (reply.includes("degen")) {
     await tipping(context);
   }
 }
@@ -107,9 +107,9 @@ async function handleTextMessage(context: HandlerContext) {
   const {
     content: { content: text },
   } = context.message;
-  if (text.startsWith("/")) {
-    await context.intent(text);
-  } else if (text.includes("@bot")) {
+  if (text.includes("@bot")) {
     await agent(context);
+  } else if (text.startsWith("/")) {
+    await context.intent(text);
   }
 }

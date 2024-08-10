@@ -3,7 +3,7 @@ import { vision, textGeneration } from "../lib/openai.js";
 
 export async function handler(context: HandlerContext) {
   if (!process?.env?.OPEN_AI_API_KEY) {
-    console.error("No OPEN_AI_API_KEY found in .env");
+    console.log("No OPEN_AI_API_KEY found in .env");
     return;
   }
   const {
@@ -54,8 +54,14 @@ export async function handler(context: HandlerContext) {
       ]
       `;
 
+      //I want the reply to be an array of messages so the bot feels like is sending multuple ones
       const { reply } = await textGeneration(response, prompt);
-      context.intent(reply);
+      let splitMessages = JSON.parse(reply);
+      for (const message of splitMessages) {
+        let msg = message as string;
+        if (msg.startsWith("/")) await context.intent(msg);
+        else await context.reply(msg);
+      }
     }
   }
 }

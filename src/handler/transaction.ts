@@ -1,6 +1,5 @@
 import { HandlerContext } from "@xmtp/message-kit";
 
-// Main handler function for processing commands
 export async function handler(context: HandlerContext) {
   const {
     message: {
@@ -16,7 +15,7 @@ export async function handler(context: HandlerContext) {
 
       if (!amountSend || !tokenSend || !username) {
         context.reply(
-          "Missing required parameters. Please provide amount, token, and username.",
+          "Missing required parameters. Please provide amount, token, and username."
         );
         return;
       }
@@ -34,7 +33,7 @@ export async function handler(context: HandlerContext) {
 
       if (!amount || !token_from || !token_to) {
         context.reply(
-          "Missing required parameters. Please provide amount, token_from, and token_to.",
+          "Missing required parameters. Please provide amount, token_from, and token_to."
         );
         return;
       }
@@ -52,7 +51,7 @@ export async function handler(context: HandlerContext) {
 
       if (!collection || !tokenId) {
         context.reply(
-          "Missing required parameters. Please provide collection address and token id.",
+          "Missing required parameters. Please provide collection address and token id."
         );
         return;
       }
@@ -77,7 +76,7 @@ export async function handler(context: HandlerContext) {
 function generateFrameURL(
   baseUrl: string,
   transaction_type: string,
-  params: any,
+  params: any
 ) {
   // Filter out undefined parameters
   let filteredParams: { [key: string]: any } = {};

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@stackso/js-core": "^0.3.1",
-    "@xmtp/message-kit": "latest",
+    "@xmtp/message-kit": "^0.0.8",
     "openai": "^4.52.0"
   },
   "devDependencies": {

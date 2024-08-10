@@ -3,18 +3,18 @@ import type { User } from "@xmtp/message-kit";
 
 export async function handler(context: HandlerContext) {
   const {
-    newConversation,
     message: {
       content: {
         params: { amount, name, username, token },
       },
       sender,
     },
+    client,
   } = context;
 
   if (!amount || !name || !username) {
     context.reply(
-      "Missing required parameters. Please provide amount, token, and username.",
+      "Missing required parameters. Please provide amount, token, and username."
     );
     return;
   }
@@ -26,15 +26,12 @@ export async function handler(context: HandlerContext) {
       .map((user: User) => user.address!),
   ];
 
-  const conv = await newConversation(addresses);
-  await conv.updateName(`${name}`);
-  await conv.send(`Welcome to the ${name} bet!`);
-  await conv.send(`To confirm your bet, click the button below.`);
-  await context.intent(`/send ${amount} ${token} to @bot`, {
-    conversation: conv,
-  });
-
+  const group = await client?.conversations.newConversation(addresses);
+  await group.updateName(`${name}`);
+  await group.send(`Welcome to the ${name} bet!`);
+  await group.send(`To confirm your bet, click the button below.`);
+  await context.intent(`/send ${amount} ${token} to @bot`, group);
   await context.reply(
-    `Bet created!. Go to the new group: https://converse.xyz/${conv.id}`,
+    `Bet created!. Go to the new group: https://converse.xyz/${group.id}`
   );
 }
