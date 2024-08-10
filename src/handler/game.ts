@@ -10,7 +10,6 @@ export async function handler(context: HandlerContext) {
       },
     },
   } = context;
-  console.log("command", command, game);
   // URLs for each game type
   const gameUrls: { [key: string]: string } = {
     wordle: "https://openframedl.vercel.app/",
@@ -32,7 +31,7 @@ export async function handler(context: HandlerContext) {
     default:
       // Inform the user about unrecognized commands and provide available options
       context.reply(
-        "Command not recognized. Available games: wordle, slot, or help.",
+        "Command not recognized. Available games: wordle, slot, or help."
       );
   }
 }
