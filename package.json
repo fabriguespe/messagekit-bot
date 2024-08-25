@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@stackso/js-core": "^0.3.1",
-    "openai": "^4.52.0",
-    "@xmtp/message-kit": "link:@xmtp/message-kit"
+    "@xmtp/message-kit": "^0.0.10",
+    "openai": "^4.52.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.3",
