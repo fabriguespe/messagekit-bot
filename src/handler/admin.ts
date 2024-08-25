@@ -37,11 +37,11 @@ const handleGroupname = (newValue: string, adminName: string) => {
 };
 export async function handler(context: HandlerContext) {
   const {
-    conversation,
     group,
     members,
     message: { content, typeId, sender },
   } = context;
+
   if (typeId === "group_updated") {
     const {
       initiatedByInboxId,
@@ -66,8 +66,8 @@ export async function handler(context: HandlerContext) {
         message += handleGroupname(newValue, adminName);
       }
     }
-    await context.send(message);
-  } else if (typeId === "text") {
+    await context.reply(message);
+  } else if (typeId === "text" && group) {
     const {
       command,
       params: { username, name },

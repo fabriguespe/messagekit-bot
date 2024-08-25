@@ -5,13 +5,12 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w & sleep 1 && nodemon --quiet dist/index.js",
-    "dev:bun": "tsc -w & sleep 1 && bun run --watch dist/index.js",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@stackso/js-core": "^0.3.1",
-    "@xmtp/message-kit": "^0.0.9",
-    "openai": "^4.52.0"
+    "openai": "^4.52.0",
+    "@xmtp/message-kit": "link:@xmtp/message-kit"
   },
   "devDependencies": {
     "nodemon": "^3.1.3",

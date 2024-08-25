@@ -6,6 +6,7 @@ export async function handler(context: HandlerContext) {
     getMessageById,
     message: { content, sender, typeId },
   } = context;
+
   const msg = await getMessageById(content.reference);
   const replyReceiver = members?.find(
     (member) => member.inboxId === msg?.senderInboxId
@@ -49,10 +50,10 @@ export async function handler(context: HandlerContext) {
     return;
   }
   const receiverAddresses = receivers.map((receiver) => receiver.address);
-
+  console.log(sender.address, receiverAddresses);
   // Process sending tokens to each receiver
   context.sendTo(
-    `You received ${amount} tokens from ${sender.username}.`,
+    `You received ${amount} tokens from ${sender.address}.`,
     receiverAddresses
   );
 
